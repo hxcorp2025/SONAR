@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sonar do Tráfego Avançado</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/8.4.5/swiper-bundle.min.css" />
+
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+    <div class="swiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide" id="calculator-2">
+                <h1 class="title">Sonar do Tráfego Avançado</h1>
+                <p class="subtitle">Preencha as métricas diretamente do seu gerenciador de anúncios para obter uma
+                    análise completa do seu funil e recomendações específicas para otimização e escala.</p>
+
+                <div class="container">
+                    <div class="metrics-container">
+                        <h2>Métricas do Gerenciador</h2>
+
+                        <div class="metrics-section">
+                            <h3>Métricas de Anúncios</h3>
+
+                            <div class="input-group">
+                                <label for="impressions">Impressões</label>
+                                <input type="number" id="impressions" placeholder="Número total de impressões">
+                            </div>
+
+                            <div class="input-group">
+                                <label for="clicks">Cliques no Link</label>
+                                <input type="number" id="clicks" placeholder="Número total de cliques">
+                            </div>
+
+                            <div class="input-group">
+                                <label for="cpm">CPM (R$)</label>
+                                <input type="number" id="cpm" step="0.01" placeholder="Custo por 1000 impressões">
+                            </div>
+
+                            <div class="input-group">
+                                <label for="cpc">CPC (R$)</label>
+                                <input type="number" id="cpc" step="0.01" placeholder="Custo por clique">
+                            </div>
+                        </div>
+
+                        <div class="metrics-section">
+                            <h3>Métricas do Site</h3>
+
+                            <div class="input-group">
+                                <label for="pageviews">Visualizações da Página de Destino</label>
+                                <input type="number" id="pageviews" placeholder="Número total de visualizações">
+                            </div>
+
+                            <div class="input-group">
+                                <label for="checkouts">Checkout Iniciados</label>
+                                <input type="number" id="checkouts" placeholder="Número de checkouts iniciados">
+                            </div>
+
+                            <div class="input-group">
+                                <label for="purchases">Compras</label>
+                                <input type="number" id="purchases" placeholder="Número de compras realizadas">
+                            </div>
+
+                            <div class="input-group">
+                                <label for="adSpend">Investimento Total (R$)</label>
+                                <input type="number" id="adSpend" step="0.01" placeholder="Valor total investido">
+                            </div>
+
+                            <div class="input-group">
+                                <label for="averageOrder">Ticket Médio (R$)</label>
+                                <input type="number" id="averageOrder" step="0.01" placeholder="Valor médio por compra">
+                            </div>
+                        </div>
+
+                        <button id="calculateBtn"
+                            style="background-color: var(--primary-color); color: white; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-weight: 600; width: 100%; margin-top: 10px; font-family: 'Montserrat', sans-serif;">Calcular
+                            Métricas</button>
+                    </div>
+
+                    <div class="sonar-wrapper">
+                        <div id="status-message" class="status-message">Preencha os campos das métricas e clique em
+                            "Calcular" para visualizar o resultado</div>
+                        <div class="sonar-container">
+                            <!-- Grade base do sonar -->
+                            <svg class="grid-overlay" width="100%" height="100%" viewBox="0 0 500 500">
+                                <defs>
+                                    <radialGradient id="gridGradient">
+                                        <stop offset="0%" stop-color="#0f0" stop-opacity="0.3" />
+                                        <stop offset="100%" stop-color="#0f0" stop-opacity="0.1" />
+                                    </radialGradient>
+                                </defs>
+
+                                <!-- Círculos concêntricos -->
+                                <g stroke="#0f0" stroke-width="1" opacity="0.5">
+                                    <circle cx="250" cy="250" r="200" fill="none" />
+                                    <circle cx="250" cy="250" r="150" fill="none" />
+                                    <circle cx="250" cy="250" r="100" fill="none" />
+                                    <circle cx="250" cy="250" r="50" fill="none" />
+                                </g>
+
+                                <!-- Linhas cruzadas -->
+                                <line x1="50" y1="250" x2="450" y2="250" stroke="#0f0" stroke-width="1" opacity="0.3" />
+                                <line x1="250" y1="50" x2="250" y2="450" stroke="#0f0" stroke-width="1" opacity="0.3" />
+
+                                <!-- Marcadores de ângulo -->
+                                <g fill="#0f0" font-size="12" opacity="0.5">
+                                    <text x="250" y="40">0°</text>
+                                    <text x="460" y="250">90°</text>
+                                    <text x="250" y="470">180°</text>
+                                    <text x="30" y="250">270°</text>
+                                </g>
+                            </svg>
+
+                            <!-- Ponto de detecção -->
+                            <div id="detectionPoint" class="detection-point" style="left: 250px; top: 250px;"></div>
+
+                            <!-- Efeito de varredura -->
+                            <div class="sonar-sweep"></div>
+
+                            <!-- Container para as ondas de pulso -->
+                            <div id="pulseContainer"></div>
+                        </div>
+
+                        <div id="calculated-metrics"
+                            style="background-color: var(--background-card); padding: 20px; border-radius: 10px; border: 1px solid var(--border-color);">
+                            <h3 style="color: var(--primary-color); text-align: center; margin-top: 0;">Métricas
+                                Calculadas</h3>
+
+                            <div class="metric-display">
+                                <span class="metric-name">CTR (Taxa de Cliques):</span>
+                                <span class="metric-value" id="ctr-value">0.00%</span>
+                            </div>
+
+                            <div class="metric-display">
+                                <span class="metric-name">Connect Rate (Clique → Page View):</span>
+                                <span class="metric-value" id="connect-rate-value">0.00%</span>
+                            </div>
+
+                            <div class="metric-display">
+                                <span class="metric-name">Conversão da Página (Page View → Checkout):</span>
+                                <span class="metric-value" id="page-conversion-value">0.00%</span>
+                            </div>
+
+                            <div class="metric-display">
+                                <span class="metric-name">Conversão do Checkout (Checkout → Compra):</span>
+                                <span class="metric-value" id="checkout-conversion-value">0.00%</span>
+                            </div>
+
+                            <div class="metric-display">
+                                <span class="metric-name">Taxa de Conversão Total:</span>
+                                <span class="metric-value" id="total-conversion-value">0.00%</span>
+                            </div>
+
+                            <div class="metric-display">
+                                <span class="metric-name">CAC (Custo de Aquisição de Cliente):</span>
+                                <span class="metric-value" id="cac-value">R$ 0.00</span>
+                            </div>
+
+                            <div class="metric-display">
+                                <span class="metric-name">ROAS:</span>
+                                <span class="metric-value" id="roas-value">0.00</span>
+                            </div>
+
+                            <div class="metric-display">
+                                <span class="metric-name">Número de Vendas:</span>
+                                <span class="metric-value" id="sales-count-value">0</span>
+                            </div>
+
+                            <div class="metric-display">
+                                <span class="metric-name">Lucro Bruto:</span>
+                                <span class="metric-value" id="gross-profit-value">R$ 0.00</span>
+                            </div>
+
+                            <div class="metric-display">
+                                <span class="metric-name">Lucro (%):</span>
+                                <span class="metric-value" id="profit-percentage-value">0.00%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="thermometer-container">
+                        <h2>Termômetro de Métricas</h2>
+
+                        <div class="metric-thermometer">
+                            <div class="metric-header">
+                                <span class="metric-name-therm">CTR</span>
+                                <span class="metric-value-therm" id="ctr-therm-value">0.00%</span>
+                            </div>
+                            <div class="thermometer-bar">
+                                <div class="thermometer-level" id="ctr-level"
+                                    style="background: linear-gradient(to right, var(--red-color), var(--yellow-color), var(--green-color));">
+                                </div>
+                            </div>
+                            <div class="thermometer-label">
+                                <span class="ruim">Ruim</span>
+                                <span class="bom">Bom</span>
+                                <span class="otimo">Ótimo</span>
+                            </div>
+                            <div class="next-step" id="ctr-next-step"></div>
+                        </div>
+
+                        <div class="metric-thermometer">
+                            <div class="metric-header">
+                                <span class="metric-name-therm">Connect Rate</span>
+                                <span class="metric-value-therm" id="connect-rate-therm-value">0.00%</span>
+                            </div>
+                            <div class="thermometer-bar">
+                                <div class="thermometer-level" id="connect-rate-level"
+                                    style="background: linear-gradient(to right, var(--red-color), var(--yellow-color), var(--green-color));">
+                                </div>
+                            </div>
+                            <div class="thermometer-label">
+                                <span class="ruim">Ruim</span>
+                                <span class="bom">Bom</span>
+                                <span class="otimo">Ótimo</span>
+                            </div>
+                            <div class="next-step" id="connect-rate-next-step"></div>
+                        </div>
+
+                        <div class="metric-thermometer">
+                            <div class="metric-header">
+                                <span class="metric-name-therm">Conversão da Página</span>
+                                <span class="metric-value-therm" id="page-conversion-therm-value">0.00%</span>
+                            </div>
+                            <div class="thermometer-bar">
+                                <div class="thermometer-level" id="page-conversion-level"
+                                    style="background: linear-gradient(to right, var(--red-color), var(--yellow-color), var(--green-color));">
+                                </div>
+                            </div>
+                            <div class="thermometer-label">
+                                <span class="ruim">Ruim</span>
+                                <span class="bom">Bom</span>
+                                <span class="otimo">Ótimo</span>
+                            </div>
+                            <div class="next-step" id="page-conversion-next-step"></div>
+                        </div>
+
+                        <div class="metric-thermometer">
+                            <div class="metric-header">
+                                <span class="metric-name-therm">Conversão do Checkout</span>
+                                <span class="metric-value-therm" id="checkout-conversion-therm-value">0.00%</span>
+                            </div>
+                            <div class="thermometer-bar">
+                                <div class="thermometer-level" id="checkout-conversion-level"
+                                    style="background: linear-gradient(to right, var(--red-color), var(--yellow-color), var(--green-color));">
+                                </div>
+                            </div>
+                            <div class="thermometer-label">
+                                <span class="ruim">Ruim</span>
+                                <span class="bom">Bom</span>
+                                <span class="otimo">Ótimo</span>
+                            </div>
+                            <div class="next-step" id="checkout-conversion-next-step"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container">
+                    <div class="optimization-container" id="optimization-recommendations">
+                        <h2>Mapa de Otimização</h2>
+                        <div class="optimization-placeholder"
+                            style="text-align: center; padding: 40px 20px; color: var(--text-gray);">
+                            Calcule suas métricas para receber recomendações de otimização personalizadas
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/8.4.5/swiper-bundle.min.js"></script>
+
+    <script src="javascript/swiper.js"></script>
+    <script src="javascript/sonarTrafegoAvancado.js"></script>
+
+</body>
+
+
+</html>

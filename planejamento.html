@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planejamento Estratégico</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/8.4.5/swiper-bundle.min.css" />
+
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+    <div class="swiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide" id="calculator-1">
+                <div class="control">
+                    <h1>Planejamento Estratégico</h1>
+                    <div class="simulator">
+                        <div>
+                            <div class="container-all-marketing">
+                                <div class="container-marketing">
+                                    <div class="container-label">
+                                        <span class="name">Quanto quer faturar?</span>
+                                        <span class="value">R$ <span id="profitDisplay">10.000,00</span></span>
+                                    </div>
+                                    <input id="profitSlider" type="range" step="1000" min="1000" max="500000"
+                                        value="10000" data-max="500000" />
+                                </div>
+
+                                <div class="container-marketing">
+                                    <div class="container-label">
+                                        <span class="name">Preço do produto</span>
+                                        <span class="value">R$ <span id="productDisplay">3.500,00</span></span>
+                                    </div>
+                                    <input id="productSlider" type="range" min="0" max="15000" step="50" value="3500"
+                                        data-max="15000" />
+                                </div>
+
+                                <div class="container-marketing">
+                                    <div class="container-label">
+                                        <span class="name">A cada quantos leads sai uma venda?</span>
+                                        <span class="value"><span id="leadsDisplay">10</span></span>
+                                    </div>
+                                    <input id="leadsSlider" type="range" min="1" max="50" value="10" data-max="50" />
+                                </div>
+
+                                <div class="container-marketing">
+                                    <div class="container-label">
+                                        <span class="name">Qual é o preço médio do lead?</span>
+                                        <span class="value">R$ <span id="leadValueDisplay">8,00</span></span>
+                                    </div>
+                                    <input id="leadValueSlider" type="range" min="0" max="100" step="0.01" value="8"
+                                        data-max="100" />
+                                </div>
+
+                                <div class="container-marketing off">
+                                    <div class="container-label">
+                                        <span class="off">Conversão</span>
+                                        <span class="off"><span id="conversionDisplay">%</span></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="container-all-marketing">
+                                <div class="container-marketing total">
+                                    <div class="container-label">
+                                        <div style="display: flex; gap: 10px; align-items: center; width: 100%;">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"
+                                                viewBox="0 0 40 40" fill="none">
+                                                <circle cx="20" cy="20" r="20" fill="#4CAF50" />
+                                                <path
+                                                    d="M20 11V29.3333M24.1667 14.3333H17.9167C17.1431 14.3333 16.4013 14.6406 15.8543 15.1876C15.3073 15.7346 15 16.4765 15 17.25C15 18.0235 15.3073 18.7654 15.8543 19.3124C16.4013 19.8594 17.1431 20.1667 17.9167 20.1667H22.0833C22.8569 20.1667 23.5987 20.474 24.1457 21.0209C24.6927 21.5679 25 22.3098 25 23.0833C25 23.8569 24.6927 24.5987 24.1457 25.1457C23.5987 25.6927 22.8569 26 22.0833 26H15"
+                                                    stroke="white" stroke-width="1.5" stroke-linecap="round"
+                                                    stroke-linejoin="round" />
+                                            </svg>
+                                            <span class="lucro">Lucro</span>
+                                            <span class="value"
+                                                style="cursor: default; display: flex; align-items: end; justify-content: end; width: 100%;">
+                                                R$ <span id="profitCalcDisplay">0,00</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="container-marketing off">
+                                    <div class="container-label">
+                                        <span class="off">Quantas vendas preciso fazer?</span>
+                                        <span class="off"><span id="salesDisplay">0</span></span>
+                                    </div>
+                                </div>
+
+                                <div class="container-marketing off">
+                                    <div class="container-label">
+                                        <span class="off">Quantos leads preciso captar?</span>
+                                        <span class="off"><span id="leadsRequiredDisplay">0</span></span>
+                                    </div>
+                                </div>
+
+                                <div class="container-marketing off">
+                                    <div class="container-label">
+                                        <span class="off">Quanto vou ter que investir?</span>
+                                        <span class="off"><span id="investmentDisplay">0</span></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+
+
+
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/8.4.5/swiper-bundle.min.js"></script>
+
+    <script src="javascript/swiper.js"></script>
+  
+    <script src="javascript/planejamentoEstrategico.js"></script>
+
+
+
+</body>
+
+</html>

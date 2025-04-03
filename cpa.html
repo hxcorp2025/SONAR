@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/8.4.5/swiper-bundle.min.css" />
+
+    <link rel="stylesheet" href="css/style.css">
+   
+    <title>CPA Maximo</title>
+</head>
+<body>
+    <div class="swiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide" id="calculator-4">
+                <h1 class="title">CPA Máximo</h1>
+                <p class="subtitle">Calcule o CPA máximo ideal com base na sua margem de contribuição para atingir o ROI desejado nos seus investimentos de marketing.</p>
+
+                <div class="container">
+                    <div class="input-container">
+                        <h2>Dados de Entrada</h2>
+
+                        <div class="input-section">
+                            <h3>Informações do Produto</h3>
+                            
+                            <div class="input-group">
+                                <label for="product-price">Valor do Produto (R$)</label>
+                                <input type="number" id="product-price" placeholder="Digite o valor do seu produto" step="0.01">
+                            </div>
+                        </div>
+
+                        <div class="input-section">
+                            <h3>Taxa de Plataforma</h3>
+                            
+                            <div class="platform-fee">
+                                <div class="input-group">
+                                    <label for="platform-percentage">Percentual (%)</label>
+                                    <input type="number" id="platform-percentage" placeholder="Ex: 6.99" step="0.01">
+                                </div>
+                                
+                                <div class="input-group">
+                                    <label for="platform-fixed">Taxa Fixa (R$)</label>
+                                    <input type="number" id="platform-fixed" placeholder="Ex: 2.50" step="0.01">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="input-section">
+                            <h3>Custos Variáveis</h3>
+                            
+                            <div id="variable-costs-container">
+                                <!-- Os custos variáveis serão adicionados aqui dinamicamente -->
+                            </div>
+                            
+                            <button id="add-cost-btn" class="add-cost-btn">+ Adicionar Custo Variável</button>
+                        </div>
+
+                        <button id="calculate-btn" class="calculate-btn">Calcular CPA Máximo</button>
+                    </div>
+
+                    <div class="results-container">
+                        <h2>Resultados</h2>
+
+                        <div class="results-section">
+                            <h3>Análise de Margem</h3>
+                            
+                            <div class="result-item">
+                                <span class="result-name">Receita por Venda:</span>
+                                <span class="result-value" id="revenue-per-sale">R$ 0,00</span>
+                            </div>
+                            
+                            <div class="result-item">
+                                <span class="result-name">Custos Variáveis:</span>
+                                <span class="result-value" id="total-variable-costs">R$ 0,00</span>
+                            </div>
+                            
+                            <div class="result-item">
+                                <span class="result-name">Margem de Contribuição (R$):</span>
+                                <span class="result-value" id="contribution-margin">R$ 0,00</span>
+                            </div>
+                            
+                            <div class="result-item">
+                                <span class="result-name">Margem de Contribuição (%):</span>
+                                <span class="result-value" id="contribution-percentage">0,00%</span>
+                            </div>
+                        </div>
+
+                        <div class="results-section">
+                            <h3>CPA Máximo por ROI</h3>
+                            
+                            <div class="roi-cards">
+                                <div class="roi-card roi-1">
+                                    <h4>ROI 1 (Break Even)</h4>
+                                    <div class="cpa-value" id="cpa-roi-1">R$ 0,00</div>
+                                    <div class="description">Investimento = Retorno</div>
+                                </div>
+                                
+                                <div class="roi-card roi-1-5">
+                                    <h4>ROI 1.5</h4>
+                                    <div class="cpa-value" id="cpa-roi-1-5">R$ 0,00</div>
+                                    <div class="description">50% de lucro sobre o investido</div>
+                                </div>
+                                
+                                <div class="roi-card roi-2">
+                                    <h4>ROI 2 (Ideal)</h4>
+                                    <div class="cpa-value" id="cpa-roi-2">R$ 0,00</div>
+                                    <div class="description">100% de lucro sobre o investido</div>
+                                </div>
+                            </div>
+                            
+                            <div class="budget-planning">
+                                <h4>Planejamento de Orçamento</h4>
+                                
+                                <div class="budget-input">
+                                    <div class="input-group">
+                                        <label for="sales-goal">Meta de Vendas (quantidade)</label>
+                                        <input type="number" id="sales-goal" placeholder="Quantas vendas você quer alcançar?">
+                                    </div>
+                                </div>
+                                
+                                <div class="budget-results">
+                                    <div class="budget-card roi-1">
+                                        <h5>Orçamento ROI 1</h5>
+                                        <div class="budget-amount" id="budget-roi-1">R$ 0,00</div>
+                                    </div>
+                                    
+                                    <div class="budget-card roi-1-5">
+                                        <h5>Orçamento ROI 1.5</h5>
+                                        <div class="budget-amount" id="budget-roi-1-5">R$ 0,00</div>
+                                    </div>
+                                    
+                                    <div class="budget-card roi-2">
+                                        <h5>Orçamento ROI 2</h5>
+                                        <div class="budget-amount" id="budget-roi-2">R$ 0,00</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/8.4.5/swiper-bundle.min.js"></script>
+
+    <script src="javascript/swiper.js"></script>
+    <script src="javascript/cpaMaximo.js"></script>
+
+</body>
+</html>
