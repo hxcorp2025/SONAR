@@ -1,0 +1,1394 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/8.4.5/swiper-bundle.min.css" />
+
+
+    <title>CPA Maximo</title>
+</head>
+
+<style>
+    :root {
+        --primary-color: #4CAF50;
+        --primary-color-light: rgba(76, 175, 80, 0.2);
+        --primary-color-transparent: rgba(76, 175, 80, 0.1);
+        --background-dark: #1a1a1a;
+        --background-card: #2a2a2a;
+        --text-light: #fff;
+        --text-gray: #81858e;
+        --border-color: rgba(76, 175, 80, 0.3);
+        --red-color: #f44336;
+        --yellow-color: #FFC107;
+        --green-color: #4CAF50;
+    }
+
+    body {
+        font-family: 'Montserrat', sans-serif;
+        background-color: var(--background-dark);
+        color: var(--text-light);
+        margin: 0;
+        padding: 20px;
+    }
+
+    .calculators-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .nav-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        margin-bottom: 30px;
+        flex-wrap: wrap;
+    }
+
+    .nav-button {
+        padding: 15px 25px;
+        background: rgba(76, 175, 80, 0.1);
+        border: 1px solid var(--primary-color);
+        color: var(--primary-color);
+        border-radius: 8px;
+        cursor: pointer;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .nav-button.active {
+        background: var(--primary-color);
+        color: var(--text-light);
+    }
+
+    .nav-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(76, 175, 80, 0.2);
+    }
+
+    .swiper {
+        width: 100%;
+        height: auto;
+    }
+
+    .swiper-slide {
+        opacity: 0;
+        transition: opacity 0.3s ease;
+
+
+    }
+
+    .swiper-slide-active {
+        opacity: 1;
+    }
+
+    .swiper-button-next,
+    .swiper-button-prev,
+    .swiper-pagination {
+        display: none;
+    }
+
+    h1 {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* Estilos para o Planejamento Estratégico */
+    .simulator {
+        max-width: 1200px;
+        margin: 30px auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+    }
+
+    .container-all-marketing {
+        display: grid;
+        gap: 15px;
+    }
+
+    .container-marketing {
+        display: grid;
+        gap: 10px;
+        height: 78px;
+        padding: 0 20px;
+        align-content: center;
+        border-radius: 12px;
+        border: 1px solid var(--border-color);
+        background-color: var(--background-card);
+    }
+
+    .container-marketing:not(.off) {
+        background-color: var(--background-card);
+    }
+
+    .container-marketing.total {
+        background: var(--primary-color-transparent);
+        border: 1px solid var(--primary-color);
+    }
+
+    .container-label {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .container-label .name {
+        font-weight: 600;
+        font-size: 16px;
+        color: var(--text-light);
+    }
+
+    .container-label .value {
+        color: var(--primary-color);
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    .container-label .off {
+        color: var(--primary-color);
+        font-weight: 600;
+        cursor: default;
+    }
+
+    .container-label .lucro {
+        color: var(--primary-color);
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+    input[type="range"] {
+        -webkit-appearance: none;
+        width: 100%;
+        height: 4px;
+        border-radius: 15px;
+        background: #333;
+        outline: none;
+        margin: 10px 0;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: var(--primary-color);
+        cursor: pointer;
+        border: none;
+        box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+        transition: all 0.3s ease;
+    }
+
+    input[type="range"]::-webkit-slider-thumb:hover {
+        transform: scale(1.1);
+        box-shadow: 0 0 15px rgba(76, 175, 80, 0.7);
+    }
+
+    .off {
+        background: rgba(0, 0, 0, 0.2) !important;
+    }
+
+    /* Estilos para o Sonar do Tráfego Avançado */
+    .title {
+        text-align: center;
+        color: var(--primary-color);
+        font-size: 2.5em;
+        margin-bottom: 30px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .subtitle {
+        text-align: center;
+        color: var(--text-light);
+        font-size: 1.2em;
+        margin-bottom: 40px;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .container {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 30px;
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+    .metrics-container {
+        background-color: var(--background-card);
+        padding: 25px;
+        border-radius: 15px;
+        border: 1px solid var(--border-color);
+        width: 100%;
+        max-width: 450px;
+    }
+
+    .metrics-container h2 {
+        color: var(--primary-color);
+        font-size: 1.4em;
+        margin-top: 0;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .metrics-section {
+        margin-bottom: 30px;
+    }
+
+    .metrics-section h3 {
+        color: var(--text-light);
+        font-size: 1.1em;
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .input-group {
+        margin-bottom: 15px;
+    }
+
+    .input-group label {
+        display: block;
+        margin-bottom: 5px;
+        color: var(--text-gray);
+        font-size: 0.9em;
+    }
+
+    .input-group input {
+        width: 100%;
+        padding: 12px;
+        background-color: rgba(0, 0, 0, 0.3);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        color: var(--text-light);
+        font-family: 'Montserrat', sans-serif;
+        font-size: 1em;
+        transition: border-color 0.3s;
+    }
+
+    .input-group input:focus {
+        border-color: var(--primary-color);
+        outline: none;
+    }
+
+    .metric-display {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 15px;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        background-color: rgba(0, 0, 0, 0.2);
+        border: 1px solid var(--border-color);
+    }
+
+    .metric-name {
+        font-weight: 500;
+    }
+
+    .metric-value {
+        font-weight: 600;
+        color: var(--primary-color);
+    }
+
+    .sonar-wrapper {
+        position: relative;
+        width: 100%;
+        max-width: 500px;
+    }
+
+    .status-message {
+        background-color: rgba(42, 42, 42, 0.9);
+        backdrop-filter: blur(5px);
+        padding: 20px 25px;
+        border-radius: 8px;
+        text-align: center;
+        font-weight: 600;
+        min-height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+        transition: all 0.5s ease;
+    }
+
+    .sonar-container {
+        width: 500px;
+        height: 500px;
+        position: relative;
+        background-color: rgba(0, 0, 0, 0.95);
+        border-radius: 50%;
+        overflow: hidden;
+        margin-bottom: 30px;
+    }
+
+    .pulse-wave {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 400px;
+        height: 400px;
+        margin-left: -200px;
+        margin-top: -200px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(0, 255, 0, 0.2) 0%, transparent 70%);
+        transform-origin: center;
+        animation: pulseWave 4s ease-out;
+        pointer-events: none;
+    }
+
+    .sonar-sweep {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 400px;
+        height: 400px;
+        margin-left: -200px;
+        margin-top: -200px;
+        background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(0, 255, 0, 0.3) 30deg, transparent 40deg);
+        border-radius: 50%;
+        animation: rotate 4s linear infinite;
+        transform-origin: center;
+    }
+
+    .grid-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+    }
+
+    .detection-point {
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        background: #0f0;
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        box-shadow: 0 0 10px #0f0;
+        z-index: 10;
+        transition: all 1s ease-in-out;
+    }
+
+    .green-text {
+        color: var(--green-color);
+    }
+
+    .yellow-text {
+        color: var(--yellow-color);
+    }
+
+    .red-text {
+        color: var(--red-color);
+    }
+
+    @keyframes pulseWave {
+        0% {
+            transform: scale(0);
+            opacity: 1;
+        }
+
+        100% {
+            transform: scale(1);
+            opacity: 0;
+        }
+    }
+
+    @keyframes rotate {
+        from {
+            transform: rotate(0deg);
+        }
+
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    .thermometer-container {
+        width: 100%;
+        max-width: 350px;
+        background-color: var(--background-card);
+        padding: 25px;
+        border-radius: 15px;
+        border: 1px solid var(--border-color);
+    }
+
+    .thermometer-container h2 {
+        color: var(--primary-color);
+        font-size: 1.4em;
+        margin-top: 0;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .metric-thermometer {
+        margin-bottom: 20px;
+    }
+
+    .metric-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .metric-name-therm {
+        font-weight: 600;
+    }
+
+    .metric-value-therm {
+        font-weight: 600;
+    }
+
+    .thermometer-bar {
+        height: 20px;
+        border-radius: 10px;
+        background-color: rgba(0, 0, 0, 0.3);
+        overflow: hidden;
+        position: relative;
+    }
+
+    .thermometer-level {
+        height: 100%;
+        width: 0%;
+        transition: width 1s ease;
+    }
+
+    .thermometer-markers {
+        display: flex;
+        justify-content: space-between;
+        position: relative;
+        margin-top: 5px;
+        font-size: 0.8em;
+        color: var(--text-gray);
+    }
+
+    .thermometer-markers::before {
+        content: '';
+        position: absolute;
+        height: 5px;
+        width: 1px;
+        background-color: var(--text-gray);
+        left: 33.33%;
+        top: -5px;
+    }
+
+    .thermometer-markers::after {
+        content: '';
+        position: absolute;
+        height: 5px;
+        width: 1px;
+        background-color: var(--text-gray);
+        right: 33.33%;
+        top: -5px;
+    }
+
+    .thermometer-label {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.8em;
+        margin-top: 5px;
+    }
+
+    .ruim {
+        color: var(--red-color);
+    }
+
+    .bom {
+        color: var(--yellow-color);
+    }
+
+    .otimo {
+        color: var(--green-color);
+    }
+
+    .next-step {
+        padding: 10px;
+        background-color: rgba(0, 0, 0, 0.2);
+        border-radius: 8px;
+        margin-top: 10px;
+        font-size: 0.9em;
+    }
+
+    .next-step strong {
+        color: var(--primary-color);
+    }
+
+    .optimization-container {
+        width: 100%;
+        max-width: 900px;
+        background-color: var(--background-card);
+        padding: 25px;
+        border-radius: 15px;
+        border: 1px solid var(--border-color);
+        margin-top: 30px;
+    }
+
+    .optimization-container h2 {
+        color: var(--primary-color);
+        font-size: 1.4em;
+        margin-top: 0;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .optimization-section {
+        margin-bottom: 25px;
+    }
+
+    .optimization-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .optimization-header h3 {
+        margin: 0;
+        color: var(--text-light);
+    }
+
+    .optimization-header .status-indicator {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+
+    .optimization-content {
+        padding-left: 22px;
+    }
+
+    .optimization-causes {
+        margin-bottom: 15px;
+    }
+
+    .optimization-causes h4,
+    .optimization-actions h4 {
+        color: var(--text-gray);
+        font-size: 0.9em;
+        margin-top: 0;
+        margin-bottom: 5px;
+    }
+
+    .optimization-causes ul,
+    .optimization-actions ul {
+        margin: 0;
+        padding-left: 20px;
+    }
+
+    .optimization-causes li,
+    .optimization-actions li {
+        margin-bottom: 5px;
+        font-size: 0.95em;
+    }
+
+    .optimization-actions li {
+        color: var(--primary-color);
+    }
+
+    .detailed-action {
+        background-color: rgba(0, 0, 0, 0.2);
+        padding: 15px;
+        border-radius: 8px;
+        margin-top: 10px;
+        font-size: 0.9em;
+        border-left: 3px solid var(--primary-color);
+    }
+
+    /* Estilos para Métricas Comerciais */
+    .calculadora {
+        max-width: 900px;
+        margin: 30px auto;
+        padding: 30px;
+        background: #2a2a2a;
+        box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.3);
+        border-radius: 12px;
+    }
+
+    h2 {
+        font-size: 24px;
+        margin-bottom: 30px;
+        text-align: center;
+        color: #fff;
+    }
+
+    .highlight {
+        color: #4CAF50;
+        font-weight: bold;
+    }
+
+    .sliders,
+    .resultados {
+        flex: 1;
+        max-width: 50%;
+        padding: 25px;
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 12px;
+        border: 1px solid rgba(76, 175, 80, 0.1);
+    }
+
+    .slider-group {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .slider-group input[type="range"] {
+        flex: 1;
+        margin: 0 15px;
+        -webkit-appearance: none;
+        background: #333;
+        height: 6px;
+        border-radius: 3px;
+    }
+
+    .slider-group span {
+        min-width: 80px;
+        text-align: center;
+        font-size: 14px;
+        background: rgba(76, 175, 80, 0.2);
+        color: #4CAF50;
+        padding: 6px 12px;
+        border-radius: 6px;
+        font-weight: 600;
+        border: 1px solid rgba(76, 175, 80, 0.3);
+    }
+
+    .resultados h3 {
+        text-align: center;
+        color: #4CAF50;
+        font-weight: bold;
+        margin-bottom: 25px;
+    }
+
+    .resultado {
+        padding: 15px;
+        margin-bottom: 15px;
+        background: rgba(0, 0, 0, 0.2);
+        border: 1px solid rgba(76, 175, 80, 0.3);
+        border-radius: 8px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .resultado:hover {
+        transform: translateY(-5px);
+        box-shadow: 0px 4px 15px rgba(76, 175, 80, 0.2);
+        background: rgba(76, 175, 80, 0.1);
+    }
+
+    .resultado strong {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #4CAF50;
+    }
+
+    /* Estilos para CPA Máximo */
+    .input-container {
+        background-color: var(--background-card);
+        padding: 25px;
+        border-radius: 15px;
+        border: 1px solid var(--border-color);
+        width: 100%;
+        max-width: 450px;
+    }
+
+    .input-container h2 {
+        color: var(--primary-color);
+        font-size: 1.4em;
+        margin-top: 0;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .input-section {
+        margin-bottom: 30px;
+    }
+
+    .input-section h3 {
+        color: var(--text-light);
+        font-size: 1.1em;
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .platform-fee {
+        display: flex;
+        gap: 10px;
+    }
+
+    .platform-fee .input-group {
+        flex: 1;
+    }
+
+    .variable-cost {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        gap: 10px;
+    }
+
+    .variable-cost .cost-name {
+        flex: 2;
+    }
+
+    .variable-cost .cost-value {
+        flex: 1;
+    }
+
+    .variable-cost .cost-type {
+        display: flex;
+        align-items: center;
+        margin-left: 10px;
+    }
+
+    .cost-type label {
+        display: flex;
+        align-items: center;
+        margin-right: 10px;
+        cursor: pointer;
+        color: var(--text-gray);
+        font-size: 0.9em;
+    }
+
+    .cost-type input[type="radio"] {
+        margin-right: 5px;
+        cursor: pointer;
+        width: auto;
+    }
+
+    .add-cost-btn {
+        background-color: var(--primary-color-transparent);
+        color: var(--primary-color);
+        border: 1px dashed var(--primary-color);
+        border-radius: 8px;
+        padding: 10px;
+        width: 100%;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 0.9em;
+        cursor: pointer;
+        transition: all 0.3s;
+        margin-top: 10px;
+    }
+
+    .add-cost-btn:hover {
+        background-color: var(--primary-color-light);
+    }
+
+    .remove-cost {
+        background-color: transparent;
+        color: var(--red-color);
+        border: none;
+        cursor: pointer;
+        font-size: 1.2em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 5px;
+    }
+
+    .calculate-btn {
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        width: 100%;
+        margin-top: 20px;
+        font-family: 'Montserrat', sans-serif;
+        transition: background-color 0.3s;
+    }
+
+    .calculate-btn:hover {
+        background-color: #3e8e41;
+    }
+
+    .results-container {
+        background-color: var(--background-card);
+        padding: 25px;
+        border-radius: 15px;
+        border: 1px solid var(--border-color);
+        width: 100%;
+        max-width: 450px;
+    }
+
+    .results-container h2 {
+        color: var(--primary-color);
+        font-size: 1.4em;
+        margin-top: 0;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .results-section {
+        margin-bottom: 30px;
+    }
+
+    .results-section h3 {
+        color: var(--text-light);
+        font-size: 1.1em;
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .result-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 15px;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        background-color: rgba(0, 0, 0, 0.2);
+        border: 1px solid var(--border-color);
+    }
+
+    .result-name {
+        font-weight: 500;
+    }
+
+    .result-value {
+        font-weight: 600;
+        color: var(--primary-color);
+    }
+
+    .roi-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 15px;
+        border-radius: 10px;
+        margin-bottom: 15px;
+        text-align: center;
+        background-color: rgba(0, 0, 0, 0.3);
+        border: 1px solid var(--border-color);
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .roi-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .roi-card h4 {
+        color: var(--text-light);
+        margin-top: 0;
+        margin-bottom: 10px;
+    }
+
+    .roi-card .cpa-value {
+        font-size: 1.8em;
+        font-weight: 700;
+        color: var(--primary-color);
+        margin-bottom: 10px;
+    }
+
+    .roi-card .budget-value {
+        font-size: 1.2em;
+        color: var(--text-gray);
+    }
+
+    .roi-1 {
+        border-color: var(--red-color);
+    }
+
+    .roi-1 .cpa-value {
+        color: var(--red-color);
+    }
+
+    .roi-1-5 {
+        border-color: var(--yellow-color);
+    }
+
+    .roi-1-5 .cpa-value {
+        color: var(--yellow-color);
+    }
+
+    .roi-2 {
+        border-color: var(--green-color);
+    }
+
+    .roi-2 .cpa-value {
+        color: var(--green-color);
+    }
+
+    .budget-planning {
+        margin-top: 30px;
+        padding: 20px;
+        background-color: rgba(0, 0, 0, 0.2);
+        border-radius: 10px;
+        border: 1px solid var(--border-color);
+    }
+
+    .budget-planning h4 {
+        color: var(--primary-color);
+        margin-top: 0;
+        margin-bottom: 15px;
+    }
+
+    .budget-input {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    .budget-input .input-group {
+        flex: 1;
+        margin-bottom: 0;
+    }
+
+    .budget-results {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+    }
+
+    .budget-card {
+        flex: 1;
+        padding: 15px;
+        border-radius: 8px;
+        text-align: center;
+        background-color: rgba(0, 0, 0, 0.3);
+        border: 1px solid var(--border-color);
+    }
+
+    .budget-card h5 {
+        color: var(--text-light);
+        margin: 0 0 10px 0;
+        font-size: 0.9em;
+    }
+
+    .budget-card .budget-amount {
+        font-size: 1.2em;
+        font-weight: 600;
+    }
+
+    .roi-1 .budget-amount {
+        color: var(--red-color);
+    }
+
+    .roi-1-5 .budget-amount {
+        color: var(--yellow-color);
+    }
+
+    .roi-2 .budget-amount {
+        color: var(--green-color);
+    }
+
+    /* Responsividade */
+    @media (max-width: 768px) {
+        .nav-buttons {
+            flex-wrap: wrap;
+        }
+
+        .nav-button {
+            font-size: 14px;
+            padding: 12px 20px;
+        }
+
+        .container {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .sonar-container {
+            width: 300px;
+            height: 300px;
+        }
+
+        .sonar-sweep,
+        .pulse-wave {
+            width: 240px;
+            height: 240px;
+            margin-left: -120px;
+            margin-top: -120px;
+        }
+
+        .metrics-container,
+        .thermometer-container,
+        .optimization-container {
+            max-width: 100%;
+        }
+
+        .simulator {
+            grid-template-columns: 1fr;
+        }
+
+        .container-label .value,
+        .container-label .off {
+            font-size: 14px;
+        }
+
+        .platform-fee {
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .variable-cost {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .variable-cost .cost-type {
+            margin-left: 0;
+            margin-top: 10px;
+        }
+
+        .budget-input {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .budget-results {
+            flex-direction: column;
+        }
+
+        .input-container,
+        .results-container {
+            max-width: 100%;
+        }
+    }
+</style>
+
+<body>
+    <div class="swiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide" id="calculator-4">
+                <h1 class="title">CPA Máximo</h1>
+                <p class="subtitle">Calcule o CPA máximo ideal com base na sua margem de contribuição para atingir o ROI
+                    desejado nos seus investimentos de marketing.</p>
+
+                <div class="container">
+                    <div class="input-container">
+                        <h2>Dados de Entrada</h2>
+
+                        <div class="input-section">
+                            <h3>Informações do Produto</h3>
+
+                            <div class="input-group">
+                                <label for="product-price">Valor do Produto (R$)</label>
+                                <input type="number" id="product-price" placeholder="Digite o valor do seu produto"
+                                    step="0.01">
+                            </div>
+                        </div>
+
+                        <div class="input-section">
+                            <h3>Taxa de Plataforma</h3>
+
+                            <div class="platform-fee">
+                                <div class="input-group">
+                                    <label for="platform-percentage">Percentual (%)</label>
+                                    <input type="number" id="platform-percentage" placeholder="Ex: 6.99" step="0.01">
+                                </div>
+
+                                <div class="input-group">
+                                    <label for="platform-fixed">Taxa Fixa (R$)</label>
+                                    <input type="number" id="platform-fixed" placeholder="Ex: 2.50" step="0.01">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="input-section">
+                            <h3>Custos Variáveis</h3>
+
+                            <div id="variable-costs-container">
+                                <!-- Os custos variáveis serão adicionados aqui dinamicamente -->
+                            </div>
+
+                            <button id="add-cost-btn" class="add-cost-btn">+ Adicionar Custo Variável</button>
+                        </div>
+
+                        <button id="calculate-btn" class="calculate-btn">Calcular CPA Máximo</button>
+                    </div>
+
+                    <div class="results-container">
+                        <h2>Resultados</h2>
+
+                        <div class="results-section">
+                            <h3>Análise de Margem</h3>
+
+                            <div class="result-item">
+                                <span class="result-name">Receita por Venda:</span>
+                                <span class="result-value" id="revenue-per-sale">R$ 0,00</span>
+                            </div>
+
+                            <div class="result-item">
+                                <span class="result-name">Custos Variáveis:</span>
+                                <span class="result-value" id="total-variable-costs">R$ 0,00</span>
+                            </div>
+
+                            <div class="result-item">
+                                <span class="result-name">Margem de Contribuição (R$):</span>
+                                <span class="result-value" id="contribution-margin">R$ 0,00</span>
+                            </div>
+
+                            <div class="result-item">
+                                <span class="result-name">Margem de Contribuição (%):</span>
+                                <span class="result-value" id="contribution-percentage">0,00%</span>
+                            </div>
+                        </div>
+
+                        <div class="results-section">
+                            <h3>CPA Máximo por ROI</h3>
+
+                            <div class="roi-cards">
+                                <div class="roi-card roi-1">
+                                    <h4>ROI 1 (Break Even)</h4>
+                                    <div class="cpa-value" id="cpa-roi-1">R$ 0,00</div>
+                                    <div class="description">Investimento = Retorno</div>
+                                </div>
+
+                                <div class="roi-card roi-1-5">
+                                    <h4>ROI 1.5</h4>
+                                    <div class="cpa-value" id="cpa-roi-1-5">R$ 0,00</div>
+                                    <div class="description">50% de lucro sobre o investido</div>
+                                </div>
+
+                                <div class="roi-card roi-2">
+                                    <h4>ROI 2 (Ideal)</h4>
+                                    <div class="cpa-value" id="cpa-roi-2">R$ 0,00</div>
+                                    <div class="description">100% de lucro sobre o investido</div>
+                                </div>
+                            </div>
+
+                            <div class="budget-planning">
+                                <h4>Planejamento de Orçamento</h4>
+
+                                <div class="budget-input">
+                                    <div class="input-group">
+                                        <label for="sales-goal">Meta de Vendas (quantidade)</label>
+                                        <input type="number" id="sales-goal"
+                                            placeholder="Quantas vendas você quer alcançar?">
+                                    </div>
+                                </div>
+
+                                <div class="budget-results">
+                                    <div class="budget-card roi-1">
+                                        <h5>Orçamento ROI 1</h5>
+                                        <div class="budget-amount" id="budget-roi-1">R$ 0,00</div>
+                                    </div>
+
+                                    <div class="budget-card roi-1-5">
+                                        <h5>Orçamento ROI 1.5</h5>
+                                        <div class="budget-amount" id="budget-roi-1-5">R$ 0,00</div>
+                                    </div>
+
+                                    <div class="budget-card roi-2">
+                                        <h5>Orçamento ROI 2</h5>
+                                        <div class="budget-amount" id="budget-roi-2">R$ 0,00</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/8.4.5/swiper-bundle.min.js"></script>
+    <!-- Script Swiper -->
+    <script>
+        // Inicialização do Swiper
+        const swiper = new Swiper('.swiper', {
+            effect: 'fade',
+            fadeEffect: {
+                crossFade: true
+            },
+            allowTouchMove: false,
+            speed: 300,
+        });
+
+        // Navegação pelos botões
+        const navButtons = document.querySelectorAll('.nav-button');
+
+        navButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                navButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                swiper.slideTo(button.dataset.slide);
+            });
+        });
+
+    </script>
+
+
+    <!-- Script CPA -->
+    <script>
+
+        // Função para formatar valores como moeda brasileira
+        function formatCurrencyCPA(value) {
+            return new Intl.NumberFormat('pt-BR', {
+                style: 'currency',
+                currency: 'BRL'
+            }).format(value);
+        }
+
+        // Função para formatar valores como percentual
+        function formatPercentage(value) {
+            return value.toLocaleString('pt-BR', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }) + '%';
+        }
+
+        // Função para criar um novo elemento de custo variável
+        function createVariableCostElement(id) {
+            const costContainer = document.createElement('div');
+            costContainer.className = 'variable-cost';
+            costContainer.dataset.id = id;
+
+            costContainer.innerHTML = `
+        <div class="cost-name">
+            <input type="text" class="variable-cost-name" placeholder="Nome do custo variável" autocomplete="off">
+        </div>
+        <div class="cost-value">
+            <input type="number" class="variable-cost-value" placeholder="Valor" step="0.01">
+        </div>
+        <div class="cost-type">
+            <label>
+                <input type="radio" name="costType${id}" value="fixed" checked> R$
+            </label>
+            <label>
+                <input type="radio" name="costType${id}" value="percentage"> %
+            </label>
+        </div>
+        <button class="remove-cost" title="Remover custo">×</button>
+    `;
+
+            return costContainer;
+        }
+
+        // Função para calcular todas as métricas
+        function calculateCPAMaximo() {
+            // Obter valores dos campos
+            const productPrice = parseFloat(document.getElementById('product-price').value) || 0;
+            const platformPercentage = parseFloat(document.getElementById('platform-percentage').value) || 0;
+            const platformFixed = parseFloat(document.getElementById('platform-fixed').value) || 0;
+
+            // Calcular taxa da plataforma
+            const platformFee = (productPrice * (platformPercentage / 100)) + platformFixed;
+
+            // Obter e calcular todos os custos variáveis
+            let totalVariableCosts = platformFee;
+            const costElements = document.querySelectorAll('.variable-cost');
+
+            costElements.forEach(costElement => {
+                const costValue = parseFloat(costElement.querySelector('.variable-cost-value').value) || 0;
+                const costType = costElement.querySelector('input[type="radio"]:checked').value;
+
+                if (costType === 'fixed') {
+                    totalVariableCosts += costValue;
+                } else {
+                    totalVariableCosts += (productPrice * (costValue / 100));
+                }
+            });
+
+            // Calcular margem de contribuição
+            const contributionMargin = productPrice - totalVariableCosts;
+            const contributionPercentage = (contributionMargin / productPrice) * 100;
+
+            // Calcular CPA máximo para diferentes ROIs
+            const cpaRoi1 = contributionMargin;
+            const cpaRoi1_5 = contributionMargin / 1.5;
+            const cpaRoi2 = contributionMargin / 2;
+
+            // Atualizar os elementos na interface
+            document.getElementById('revenue-per-sale').textContent = formatCurrencyCPA(productPrice);
+            document.getElementById('total-variable-costs').textContent = formatCurrencyCPA(totalVariableCosts);
+            document.getElementById('contribution-margin').textContent = formatCurrencyCPA(contributionMargin);
+            document.getElementById('contribution-percentage').textContent = formatPercentage(contributionPercentage);
+
+            document.getElementById('cpa-roi-1').textContent = formatCurrencyCPA(cpaRoi1);
+            document.getElementById('cpa-roi-1-5').textContent = formatCurrencyCPA(cpaRoi1_5);
+            document.getElementById('cpa-roi-2').textContent = formatCurrencyCPA(cpaRoi2);
+
+            // Calcular orçamentos baseados na meta de vendas
+            calculateBudgets(cpaRoi1, cpaRoi1_5, cpaRoi2);
+        }
+
+        // Função para calcular orçamentos baseados na meta de vendas e CPAs máximos
+        function calculateBudgets(cpaRoi1, cpaRoi1_5, cpaRoi2) {
+            const salesGoal = parseInt(document.getElementById('sales-goal').value) || 0;
+
+            const budgetRoi1 = salesGoal * cpaRoi1;
+            const budgetRoi1_5 = salesGoal * cpaRoi1_5;
+            const budgetRoi2 = salesGoal * cpaRoi2;
+
+            document.getElementById('budget-roi-1').textContent = formatCurrencyCPA(budgetRoi1);
+            document.getElementById('budget-roi-1-5').textContent = formatCurrencyCPA(budgetRoi1_5);
+            document.getElementById('budget-roi-2').textContent = formatCurrencyCPA(budgetRoi2);
+        }
+
+        // Inicializar a aba CPA Máximo
+        document.addEventListener('DOMContentLoaded', function () {
+            // Adicionar evento para o botão de adicionar custo variável
+            const addCostBtn = document.getElementById('add-cost-btn');
+            if (addCostBtn) {
+                addCostBtn.addEventListener('click', function () {
+                    const costId = Date.now(); // ID único baseado no timestamp
+                    const newCost = createVariableCostElement(costId);
+                    document.getElementById('variable-costs-container').appendChild(newCost);
+
+                    // Adicionar evento para remover este custo
+                    newCost.querySelector('.remove-cost').addEventListener('click', function () {
+                        newCost.remove();
+                    });
+                });
+
+                // Criar o primeiro campo de custo variável quando a página carregar
+                addCostBtn.click();
+            }
+
+            // Adicionar evento para o botão de calcular
+            const calculateBtn = document.getElementById('calculate-btn');
+            if (calculateBtn) {
+                calculateBtn.addEventListener('click', calculateCPAMaximo);
+            }
+
+            // Adicionar evento para calcular orçamentos quando a meta de vendas mudar
+            const salesGoalInput = document.getElementById('sales-goal');
+            if (salesGoalInput) {
+                salesGoalInput.addEventListener('input', function () {
+                    // Remover símbolos de moeda e converter para número
+                    const cpaRoi1Text = document.getElementById('cpa-roi-1').textContent;
+                    const cpaRoi1_5Text = document.getElementById('cpa-roi-1-5').textContent;
+                    const cpaRoi2Text = document.getElementById('cpa-roi-2').textContent;
+
+                    const cpaRoi1 = parseFloat(cpaRoi1Text.replace(/[^\d,.-]/g, '').replace(',', '.')) || 0;
+                    const cpaRoi1_5 = parseFloat(cpaRoi1_5Text.replace(/[^\d,.-]/g, '').replace(',', '.')) || 0;
+                    const cpaRoi2 = parseFloat(cpaRoi2Text.replace(/[^\d,.-]/g, '').replace(',', '.')) || 0;
+
+                    calculateBudgets(cpaRoi1, cpaRoi1_5, cpaRoi2);
+                });
+            }
+        });
+
+    </script>
+
+</body>
+
+</html>
